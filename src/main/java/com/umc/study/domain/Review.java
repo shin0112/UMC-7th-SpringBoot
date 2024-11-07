@@ -42,7 +42,7 @@ public class Review extends BaseEntity {
     private Store store;
 
     @OneToOne(mappedBy = "review", cascade = CascadeType.ALL)
-    private Commentaire commentaire;
+    private Comment comment;
 
     @Builder
     public Review(
@@ -50,12 +50,12 @@ public class Review extends BaseEntity {
         final float star,
         final Member member,
         final Store store,
-        final Commentaire commentaire
+        final Comment comment
     ) {
         this.content = content;
         this.star = star;
         this.member = member;
         this.store = store;
-        this.commentaire = commentaire;
+        this.comment = comment;
     }
 }

@@ -20,7 +20,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
-public class Commentaire extends BaseEntity {
+public class Comment extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -38,7 +38,7 @@ public class Commentaire extends BaseEntity {
     private Store store;
 
     @Builder
-    public Commentaire(
+    public Comment(
         final String content,
         final Review review,
         final Store store
