@@ -43,17 +43,11 @@ public class Member extends BaseEntity {
 
     private LocalDate inactiveDate;
 
-    @Column(nullable = false, columnDefinition = "TEXT")
-    private String address;
-
-    @Column(nullable = false)
-    private int age;
-
     @Column(unique = true, columnDefinition = "VARCHAR(25)")
     private String email;
 
-    @Column(columnDefinition = "int(15)")
-    private int phone;
+    @Column(columnDefinition = "VARCHAR(11)")
+    private String phone;
 
     @Column(nullable = true)
     private String photoLink;
@@ -68,17 +62,13 @@ public class Member extends BaseEntity {
         final String nickname,
         final Gender gender,
         final LocalDate inactiveDate,
-        final String address,
-        final int age,
         final String email,
-        final int phone
+        final String phone
     ) {
         this.name = name;
         this.nickname = nickname;
         this.gender = gender;
         this.inactiveDate = inactiveDate;
-        this.address = address;
-        this.age = age;
         this.email = email;
         this.phone = phone;
     }
