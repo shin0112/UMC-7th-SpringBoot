@@ -22,11 +22,14 @@ public class Mission extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
+    @Column(nullable = false, columnDefinition = "INT DEFAULT 10000")
     private int money;
 
-    @Column(nullable = false)
-    private float score;
+    @Column
+    private String name;
+
+    @Column(nullable = false, columnDefinition = "INT DEFAULT 10")
+    private int point;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "store_id")
@@ -35,11 +38,13 @@ public class Mission extends BaseEntity {
     @Builder
     public Mission(
         final int money,
-        final float score,
+        final String name,
+        final int point,
         final Store store
     ) {
         this.money = money;
-        this.score = score;
+        this.name = name;
+        this.point = point;
         this.store = store;
     }
 }

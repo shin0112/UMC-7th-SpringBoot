@@ -12,7 +12,6 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
 import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,7 +19,6 @@ import lombok.NoArgsConstructor;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@AllArgsConstructor
 public class Review extends BaseEntity {
 
     @Id
@@ -41,7 +39,7 @@ public class Review extends BaseEntity {
     @JoinColumn(name = "store_id")
     private Store store;
 
-    @OneToOne(mappedBy = "review", cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "review", cascade = CascadeType.REMOVE, optional = false)
     private Comment comment;
 
     @Builder
@@ -49,13 +47,11 @@ public class Review extends BaseEntity {
         final String content,
         final float star,
         final Member member,
-        final Store store,
-        final Comment comment
+        final Store store
     ) {
         this.content = content;
         this.star = star;
         this.member = member;
         this.store = store;
-        this.comment = comment;
     }
 }
