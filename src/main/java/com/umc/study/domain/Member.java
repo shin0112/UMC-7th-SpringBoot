@@ -52,7 +52,7 @@ public class Member extends BaseEntity {
 
     @Enumerated(EnumType.STRING)
     @Column(columnDefinition = "VARCHAR(15) DEFAULT 'INACTIVE'")
-    private MemberStatus is_deleted;
+    private MemberStatus status;
 
     @Builder
     public Member(
@@ -70,6 +70,6 @@ public class Member extends BaseEntity {
         this.email = email;
         this.phone = phone;
         this.photoLink = "";
-        this.is_deleted = MemberStatus.INACTIVE;
+        this.status = MemberStatus.INACTIVE;
     }
 }
