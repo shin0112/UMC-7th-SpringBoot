@@ -36,6 +36,17 @@ public class Store extends BaseEntity {
     @JoinColumn(name = "region_id")
     private Region region;
 
+    @Override
+    public String toString() {
+        return "Store{" +
+            "id=" + id +
+            ", name='" + name + '\'' +
+            ", address='" + address + '\'' +
+            ", score=" + score +
+            ", region=" + (region != null ? region.getName() : "N/A") +
+            '}';
+    }
+
     @Builder
     public Store(
         final String name,
