@@ -15,7 +15,6 @@ import lombok.NoArgsConstructor;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@AllArgsConstructor
 public class Food extends BaseEntity {
 
     @Id
@@ -25,7 +24,6 @@ public class Food extends BaseEntity {
     @Column(nullable = false, columnDefinition = "VARCHAR(10)")
     private String name;
 
-    @Builder
     public Food(final String name) {
         this.name = name;
     }

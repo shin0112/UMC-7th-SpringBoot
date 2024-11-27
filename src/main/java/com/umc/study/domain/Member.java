@@ -12,7 +12,6 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import java.time.LocalDate;
 import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -24,7 +23,6 @@ import org.hibernate.annotations.DynamicUpdate;
 @DynamicInsert
 @DynamicUpdate
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@AllArgsConstructor
 public class Member extends BaseEntity {
 
     @Id
@@ -49,12 +47,12 @@ public class Member extends BaseEntity {
     @Column(columnDefinition = "VARCHAR(11)")
     private String phone;
 
-    @Column(nullable = true)
+    @Column(columnDefinition = "VARCHAR(255) DEFAULT ''")
     private String photoLink;
 
     @Enumerated(EnumType.STRING)
-    @Column(nullable = true, columnDefinition = "VARCHAR(15) DEFAULT 'INACTIVE'")
-    private MemberStatus is_deleted;
+    @Column(columnDefinition = "VARCHAR(15) DEFAULT 'INACTIVE'")
+    private MemberStatus status;
 
     @Builder
     public Member(
@@ -71,5 +69,7 @@ public class Member extends BaseEntity {
         this.inactiveDate = inactiveDate;
         this.email = email;
         this.phone = phone;
+        this.photoLink = "";
+        this.status = MemberStatus.INACTIVE;
     }
 }
