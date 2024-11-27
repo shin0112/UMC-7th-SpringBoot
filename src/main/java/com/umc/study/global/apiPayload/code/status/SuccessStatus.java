@@ -25,7 +25,7 @@ public enum SuccessStatus implements BaseCode {
     }
 
     @Override
-    public ReasonDto getReasonDto(final HttpStatus httpStatus) {
+    public ReasonDto getReasonHttpStatusDto() {
         return ReasonDto.builder()
             .isSuccess(true)
             .code(code)

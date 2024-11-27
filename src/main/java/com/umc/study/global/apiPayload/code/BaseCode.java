@@ -6,5 +6,5 @@ public interface BaseCode {
 
     ReasonDto getReasonDto();
 
-    ReasonDto getReasonDto(HttpStatus httpStatus);
+    ReasonDto getReasonHttpStatusDto();
 }
