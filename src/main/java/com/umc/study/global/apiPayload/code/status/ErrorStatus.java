@@ -19,6 +19,9 @@ public enum ErrorStatus implements BaseCode {
     _NOT_FOUND_MEMBER(HttpStatus.NOT_FOUND, "MEMBER4001", "회원 정보 없음"),
     _ALREADY_EXIST_EMAIL(HttpStatus.BAD_REQUEST, "MEMBER4002", "이메일 중복"),
 
+    // 음식
+    _NOT_FOUND_FOOD(HttpStatus.NOT_FOUND, "FOOD4001", "음식 정보 없음"),
+
     // 미션
     _NOT_FOUND_MISSION_STATUS(HttpStatus.NOT_FOUND, "MISSION4001", "미션 상태 정보 없음"),
     ;
