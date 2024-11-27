@@ -33,11 +33,9 @@ public class MissionServiceImpl implements MissionService {
         final String status
     ) {
         Member member = findMemberById(memberId);
-        MissionStatus missionStatus;
+        MissionStatus missionStatus = MissionStatus.valueOf(status);
 
-        try {
-            missionStatus = MissionStatus.valueOf(status);
-        } catch (IllegalArgumentException e) {
+        if (missionStatus == null) {
             throw new MissionHandler(ErrorStatus._NOT_FOUND_MISSION_STATUS);
         }
 
