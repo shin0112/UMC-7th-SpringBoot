@@ -1,4 +1,4 @@
-package com.umc.study.dto.service;
+package com.umc.study.dto.service.mission;
 
 import lombok.Builder;
 

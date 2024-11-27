@@ -3,7 +3,9 @@ package com.umc.study.service.mission;
 import com.umc.study.converter.MemberMissionConverter;
 import com.umc.study.domain.Member;
 import com.umc.study.domain.enums.MissionStatus;
-import com.umc.study.dto.service.MissionReadByStatusServiceResponseDto;
+import com.umc.study.dto.service.mission.MissionReadByStatusServiceResponseDto;
+import com.umc.study.global.apiPayload.code.status.ErrorStatus;
+import com.umc.study.handler.MissionHandler;
 import com.umc.study.repository.member.MemberRepository;
 import com.umc.study.repository.mission.MemberMissionRepository;
 import com.umc.study.repository.mission.MissionRepository;
@@ -31,8 +33,13 @@ public class MissionServiceImpl implements MissionService {
         final String status
     ) {
         Member member = findMemberById(memberId);
-        MissionStatus missionStatus = MissionStatus.valueOf(status);
+        MissionStatus missionStatus;
 
+        try {
+            missionStatus = MissionStatus.valueOf(status);
+        } catch (IllegalArgumentException e) {
+            throw new MissionHandler(ErrorStatus._NOT_FOUND_MISSION_STATUS);
+        }
 
         return memberMissionRepository.findByMemberAndStatus(
                 member,
