@@ -1,7 +1,7 @@
 package com.umc.study.converter;
 
 import com.umc.study.domain.mapping.MemberMission;
-import com.umc.study.dto.service.MissionReadByStatusServiceResponseDto;
+import com.umc.study.dto.service.mission.MissionReadByStatusServiceResponseDto;
 
 public class MemberMissionConverter {
 

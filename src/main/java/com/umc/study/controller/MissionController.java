@@ -1,6 +1,7 @@
 package com.umc.study.controller;
 
-import com.umc.study.dto.service.MissionReadByStatusServiceResponseDto;
+import com.umc.study.dto.service.mission.MissionReadByStatusServiceResponseDto;
+import com.umc.study.global.apiPayload.ApiResponse;
 import com.umc.study.service.mission.MissionService;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -18,10 +19,10 @@ public class MissionController {
     private final MissionService missionService;
 
     @GetMapping("/mine/{memberId}")
-    public List<MissionReadByStatusServiceResponseDto> getMissionListByStatus(
+    public ApiResponse<List<MissionReadByStatusServiceResponseDto>> getMissionListByStatus(
         @PathVariable(name = "memberId") final Long memberId,
         @RequestParam(name = "status") final String status
     ) {
-        return missionService.getMissionListByStatus(memberId, status);
+        return ApiResponse.success(missionService.getMissionListByStatus(memberId, status));
     }
 }

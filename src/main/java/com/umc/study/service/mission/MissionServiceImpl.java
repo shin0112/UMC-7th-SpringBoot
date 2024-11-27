@@ -3,7 +3,7 @@ package com.umc.study.service.mission;
 import com.umc.study.converter.MemberMissionConverter;
 import com.umc.study.domain.Member;
 import com.umc.study.domain.enums.MissionStatus;
-import com.umc.study.dto.service.MissionReadByStatusServiceResponseDto;
+import com.umc.study.dto.service.mission.MissionReadByStatusServiceResponseDto;
 import com.umc.study.repository.member.MemberRepository;
 import com.umc.study.repository.mission.MemberMissionRepository;
 import com.umc.study.repository.mission.MissionRepository;

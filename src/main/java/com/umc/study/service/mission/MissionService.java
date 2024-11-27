@@ -1,6 +1,6 @@
 package com.umc.study.service.mission;
 
-import com.umc.study.dto.service.MissionReadByStatusServiceResponseDto;
+import com.umc.study.dto.service.mission.MissionReadByStatusServiceResponseDto;
 import java.util.List;
 
 public interface MissionService {
