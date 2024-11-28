@@ -1,4 +1,4 @@
-package com.umc.study.dto.controller.member;
+package com.umc.study.dto.controller;
 
 import com.umc.study.validation.annotation.ExistCategory;
 import jakarta.validation.constraints.NotBlank;

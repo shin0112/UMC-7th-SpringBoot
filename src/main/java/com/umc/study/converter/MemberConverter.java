@@ -2,7 +2,7 @@ package com.umc.study.converter;
 
 import com.umc.study.domain.Member;
 import com.umc.study.domain.enums.Gender;
-import com.umc.study.dto.controller.member.MemberControllerRequest;
+import com.umc.study.dto.controller.MemberControllerRequest;
 import com.umc.study.dto.service.member.MemberServiceRequest;
 import com.umc.study.dto.service.member.MemberServiceResponse.JoinResultDto;
 

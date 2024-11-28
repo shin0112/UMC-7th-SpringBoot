@@ -22,6 +22,9 @@ public enum ErrorStatus implements BaseCode {
     // 음식
     _NOT_FOUND_FOOD(HttpStatus.NOT_FOUND, "FOOD4001", "음식 정보 없음"),
 
+    // 지역
+    _NOT_FOUND_REGION(HttpStatus.NOT_FOUND, "REGION4001", "지역 정보 없음"),
+
     // 미션
     _NOT_FOUND_MISSION_STATUS(HttpStatus.NOT_FOUND, "MISSION4001", "미션 상태 정보 없음"),
     ;
