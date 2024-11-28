@@ -1,18 +1,27 @@
 package com.umc.study.dto.controller.member;
 
+import com.umc.study.validation.annotation.ExistCategory;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.util.List;
 
 public class MemberControllerRequest {
 
-    public static record JoinDto(
+    public record JoinDto(
+        @NotBlank
         String email,
+        @NotNull
         String gender,
+        @NotNull
         LocalDate inactiveDate,
+        @NotNull
         String name,
+        @NotNull
         String nickname,
+        @NotNull
         String phone,
-        List<Long> preferCategory
+        @ExistCategory List<Long> preferCategory
     ) {
 
     }
