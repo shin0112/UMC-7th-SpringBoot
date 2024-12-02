@@ -3,6 +3,7 @@ package com.umc.study.controller;
 import com.umc.study.converter.MissionConverter;
 import com.umc.study.dto.controller.MissionControllerRequest;
 import com.umc.study.dto.service.mission.MissionReadByStatusServiceResponseDto;
+import com.umc.study.dto.service.mission.MissionServiceResponse;
 import com.umc.study.global.apiPayload.ApiResponse;
 import com.umc.study.service.mission.MissionService;
 import jakarta.validation.Valid;
@@ -32,7 +33,7 @@ public class MissionController {
     }
 
     @PostMapping("")
-    public ApiResponse<?> createMission(
+    public ApiResponse<MissionServiceResponse.CreateDto> createMission(
         @RequestBody @Valid final MissionControllerRequest.CreateDto request
     ) {
         return ApiResponse.success(
@@ -40,5 +41,13 @@ public class MissionController {
                 MissionConverter.toMissionCreateServiceRequestDto(request)
             )
         );
+    }
+
+    @PostMapping("/{missionId}")
+    public ApiResponse<MissionServiceResponse.CreateDto> challengeMission(
+        @PathVariable(name = "missionId") final Long missionId,
+        @RequestBody @Valid final MissionControllerRequest.ChallengeDto request
+    ) {
+        return ApiResponse.success(missionService.challengeMission(missionId, request.memberId()));
     }
 }

@@ -6,10 +6,13 @@ import com.umc.study.domain.Member;
 import com.umc.study.domain.Mission;
 import com.umc.study.domain.Store;
 import com.umc.study.domain.enums.MissionStatus;
+import com.umc.study.domain.mapping.MemberMission;
 import com.umc.study.dto.service.mission.MissionReadByStatusServiceResponseDto;
 import com.umc.study.dto.service.mission.MissionServiceRequest;
 import com.umc.study.dto.service.mission.MissionServiceResponse.CreateDto;
 import com.umc.study.global.apiPayload.code.status.ErrorStatus;
+import com.umc.study.handler.MemberHandler;
+import com.umc.study.handler.MemberMissionHandler;
 import com.umc.study.handler.MissionHandler;
 import com.umc.study.handler.StoreHandler;
 import com.umc.study.repository.member.MemberRepository;
@@ -73,5 +76,31 @@ public class MissionServiceImpl implements MissionService {
         Mission mission = missionRepository.save(MissionConverter.toMission(store, request));
 
         return MissionConverter.toMissionCreateResponseDto(mission);
+    }
+
+    @Override
+    public CreateDto challengeMission(
+        final Long missionId,
+        final Long memberId
+    ) {
+        Mission mission = missionRepository.findById(missionId)
+            .orElseThrow(() -> new MissionHandler(ErrorStatus._NOT_FOUND_MISSION));
+        Member member = memberRepository.findById(memberId)
+            .orElseThrow(() -> new MemberHandler(ErrorStatus._NOT_FOUND_MEMBER));
+
+        // 가장 최근의 member mission 1개만 가지고 와서 도전 중인지 확인(true: 이미 도전 중 / false: 새로 도전)
+        memberMissionRepository.findTop1ByMemberAndMission(member, mission).ifPresent(
+            memberMission -> {
+                if (memberMission.getStatus() == MissionStatus.CHALLENGING) {
+                    throw new MemberMissionHandler(ErrorStatus._ALREADY_CHALLENGING_MISSION);
+                }
+            });
+
+        MemberMission memberMission = memberMissionRepository.save(MemberMission.builder()
+            .mission(mission)
+            .member(member)
+            .build());
+
+        return MissionConverter.toMissionCreateResponseDto(memberMission);
     }
 }

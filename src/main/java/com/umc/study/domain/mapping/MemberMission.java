@@ -42,11 +42,10 @@ public class MemberMission extends BaseEntity {
 
     @Builder
     public MemberMission(
-        final MissionStatus status,
         final Member member,
         final Mission mission
     ) {
-        this.status = status;
+        this.status = MissionStatus.CHALLENGING;
         this.member = member;
         this.mission = mission;
     }

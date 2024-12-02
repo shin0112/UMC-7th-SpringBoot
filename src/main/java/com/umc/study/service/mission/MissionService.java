@@ -13,4 +13,6 @@ public interface MissionService {
     );
 
     CreateDto createMission(MissionServiceRequest.CreateDto request);
+
+    CreateDto challengeMission(Long missionId, Long memberId);
 }

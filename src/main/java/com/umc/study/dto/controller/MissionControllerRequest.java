@@ -18,4 +18,10 @@ public class MissionControllerRequest {
 
     }
 
+    public record ChallengeDto(
+        @NotNull
+        Long memberId
+    ) {
+
+    }
 }
