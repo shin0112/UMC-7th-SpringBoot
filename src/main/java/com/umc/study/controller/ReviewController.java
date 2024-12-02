@@ -1,7 +1,7 @@
 package com.umc.study.controller;
 
 import com.umc.study.converter.ReviewConverter;
-import com.umc.study.dto.controller.ReviewControllerRequest;
+import com.umc.study.dto.controller.ReviewControllerRequest.CreateDto;
 import com.umc.study.global.apiPayload.ApiResponse;
 import com.umc.study.service.review.ReviewService;
 import lombok.RequiredArgsConstructor;
@@ -21,7 +21,7 @@ public class ReviewController {
     @PostMapping("/{storeId}/reviews")
     public ApiResponse<Object> createReview(
         @PathVariable(name = "storeId") final Long storeId,
-        @RequestBody final ReviewControllerRequest.Create request
+        @RequestBody final CreateDto request
     ) {
         reviewService.createReview(
             storeId,

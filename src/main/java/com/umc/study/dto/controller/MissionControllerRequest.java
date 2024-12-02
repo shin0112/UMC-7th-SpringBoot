@@ -3,15 +3,17 @@ package com.umc.study.dto.controller;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
-public class ReviewControllerRequest {
+public class MissionControllerRequest {
 
     public record CreateDto(
         @NotNull
-        Long memberId,
+        Long storeId,
         @NotNull
-        Float star,
+        int money,
+        @NotNull
+        int point,
         @NotBlank
-        String content
+        String name
     ) {
 
     }

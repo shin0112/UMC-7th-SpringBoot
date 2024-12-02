@@ -3,7 +3,7 @@ package com.umc.study.service.review;
 import com.umc.study.domain.Member;
 import com.umc.study.domain.Review;
 import com.umc.study.domain.Store;
-import com.umc.study.dto.service.review.ReviewServiceRequest;
+import com.umc.study.dto.service.review.ReviewServiceRequest.CreateDto;
 import com.umc.study.repository.member.MemberRepository;
 import com.umc.study.repository.review.ReviewRepository;
 import com.umc.study.repository.store.StoreRepository;
@@ -21,7 +21,7 @@ public class ReviewServiceImpl implements ReviewService {
     @Override
     public void createReview(
         final Long storeId,
-        final ReviewServiceRequest.Create request
+        final CreateDto request
     ) {
         Member member = memberRepository.findById(request.memberId())
             .orElseThrow(() -> new RuntimeException("회원 없음"));

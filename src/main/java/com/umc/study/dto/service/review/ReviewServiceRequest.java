@@ -5,7 +5,7 @@ import lombok.Builder;
 public class ReviewServiceRequest {
 
     @Builder
-    public record Create(
+    public record CreateDto(
         Long memberId,
         Float star,
         String content
