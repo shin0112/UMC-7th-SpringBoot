@@ -34,11 +34,6 @@ public class MissionServiceImpl implements MissionService {
     private final StoreRepository storeRepository;
     private final MemberMissionRepository memberMissionRepository;
 
-    private Member findMemberById(Long memberId) {
-        return memberRepository.findById(memberId)
-            .orElseThrow(() -> new RuntimeException("회원이 존재하지 않습니다."));
-    }
-
     @Override
     public List<MissionReadByStatusServiceResponseDto> getMissionListByStatus(
         final Long memberId,
@@ -83,18 +78,8 @@ public class MissionServiceImpl implements MissionService {
         final Long missionId,
         final Long memberId
     ) {
-        Mission mission = missionRepository.findById(missionId)
-            .orElseThrow(() -> new MissionHandler(ErrorStatus._NOT_FOUND_MISSION));
-        Member member = memberRepository.findById(memberId)
-            .orElseThrow(() -> new MemberHandler(ErrorStatus._NOT_FOUND_MEMBER));
-
-        // 가장 최근의 member mission 1개만 가지고 와서 도전 중인지 확인(true: 이미 도전 중 / false: 새로 도전)
-        memberMissionRepository.findTop1ByMemberAndMission(member, mission).ifPresent(
-            memberMission -> {
-                if (memberMission.getStatus() == MissionStatus.CHALLENGING) {
-                    throw new MemberMissionHandler(ErrorStatus._ALREADY_CHALLENGING_MISSION);
-                }
-            });
+        Mission mission = findMissionById(missionId);
+        Member member = findMemberById(memberId);
 
         MemberMission memberMission = memberMissionRepository.save(MemberMission.builder()
             .mission(mission)
@@ -102,5 +87,26 @@ public class MissionServiceImpl implements MissionService {
             .build());
 
         return MissionConverter.toMissionCreateResponseDto(memberMission);
+    }
+
+    private Member findMemberById(final Long memberId) {
+        return memberRepository.findById(memberId)
+            .orElseThrow(() -> new MemberHandler(ErrorStatus._NOT_FOUND_MEMBER));
+    }
+
+    private Mission findMissionById(final Long missionId) {
+        return missionRepository.findById(missionId)
+            .orElseThrow(() -> new MissionHandler(ErrorStatus._NOT_FOUND_MISSION));
+    }
+
+    // 가장 최근의 member mission 1개만 가지고 와서 도전 중인지 확인(true: 이미 도전 중 / false: 새로 도전)
+    @Override
+    public boolean isChallengingMission(final Long memberId, final Long missionId) {
+        Mission mission = findMissionById(missionId);
+        Member member = findMemberById(memberId);
+
+        return memberMissionRepository.findTop1ByMemberAndMission(member, mission)
+            .map(memberMission -> memberMission.getStatus() != MissionStatus.CHALLENGING)
+            .orElse(true);
     }
 }

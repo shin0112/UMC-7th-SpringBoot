@@ -1,38 +1,35 @@
 package com.umc.study.validation.validator;
 
 import com.umc.study.global.apiPayload.code.status.ErrorStatus;
-import com.umc.study.repository.food.FoodRepository;
-import com.umc.study.service.food.FoodService;
-import com.umc.study.service.member.MemberService;
-import com.umc.study.validation.annotation.ExistCategory;
+import com.umc.study.service.store.StoreService;
+import com.umc.study.validation.annotation.ExistStore;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
-import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
-public class CategoryExistValidator implements ConstraintValidator<ExistCategory, List<Long>> {
+public class StoreExistsValidator implements ConstraintValidator<ExistStore, Long> {
 
-    private final FoodService foodService;
+    private final StoreService storeService;
 
     @Override
-    public void initialize(final ExistCategory constraintAnnotation) {
+    public void initialize(final ExistStore constraintAnnotation) {
         ConstraintValidator.super.initialize(constraintAnnotation);
     }
 
     @Override
     public boolean isValid(
-        final List<Long> valueList,
+        final Long id,
         final ConstraintValidatorContext context
     ) {
-        boolean isValid = foodService.isExistFood(valueList);
+        boolean isValid = storeService.isExistStore(id);
 
         if (!isValid) {
             context.disableDefaultConstraintViolation();
             context
-                .buildConstraintViolationWithTemplate(ErrorStatus._NOT_FOUND_FOOD.toString())
+                .buildConstraintViolationWithTemplate(ErrorStatus._NOT_FOUND_STORE.toString())
                 .addConstraintViolation();
         }
 

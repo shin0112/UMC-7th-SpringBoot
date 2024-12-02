@@ -37,4 +37,10 @@ public class StoreServiceImpl implements StoreService {
 
         return StoreConverter.toStoreCreateDto(store);
     }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Boolean isExistStore(final Long storeId) {
+        return storeRepository.findById(storeId).isPresent();
+    }
 }
