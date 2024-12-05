@@ -20,12 +20,14 @@ public class MemberConverter {
     ) {
         return MemberServiceRequest.JoinDto.builder()
             .email(controllerRequestDto.email())
+            .password(controllerRequestDto.password())
             .gender(controllerRequestDto.gender())
             .inactiveDate(controllerRequestDto.inactiveDate())
             .name(controllerRequestDto.name())
             .nickname(controllerRequestDto.nickname())
             .phone(controllerRequestDto.phone())
             .preferCategory(controllerRequestDto.preferCategory())
+            .role(controllerRequestDto.role())
             .build();
     }
 

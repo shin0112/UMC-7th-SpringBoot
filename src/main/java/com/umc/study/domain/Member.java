@@ -3,6 +3,7 @@ package com.umc.study.domain;
 import com.umc.study.domain.common.BaseEntity;
 import com.umc.study.domain.enums.Gender;
 import com.umc.study.domain.enums.MemberStatus;
+import com.umc.study.domain.enums.Role;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -54,6 +55,12 @@ public class Member extends BaseEntity {
     @Column(columnDefinition = "VARCHAR(15) DEFAULT 'INACTIVE'")
     private MemberStatus status;
 
+    @Column(nullable = false)
+    private String password;
+
+    @Enumerated(EnumType.STRING)
+    private Role role = Role.USER;
+
     @Builder
     public Member(
         final String name,
@@ -61,7 +68,9 @@ public class Member extends BaseEntity {
         final Gender gender,
         final LocalDate inactiveDate,
         final String email,
-        final String phone
+        final String phone,
+        final String password,
+        final Role role
     ) {
         this.name = name;
         this.nickname = nickname;
@@ -71,5 +80,11 @@ public class Member extends BaseEntity {
         this.phone = phone;
         this.photoLink = "";
         this.status = MemberStatus.INACTIVE;
+        this.password = password;
+        this.role = role;
+    }
+
+    public void encodePassword(String password) {
+        this.password = password;
     }
 }
