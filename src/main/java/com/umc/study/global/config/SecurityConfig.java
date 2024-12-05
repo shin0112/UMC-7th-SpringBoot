@@ -1,5 +1,7 @@
 package com.umc.study.global.config;
 
+import java.util.Arrays;
+import java.util.List;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -11,6 +13,9 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.security.web.util.matcher.OrRequestMatcher;
 import org.springframework.security.web.util.matcher.RequestMatcher;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 @Configuration
 @EnableWebSecurity
@@ -20,6 +25,9 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
             .csrf(AbstractHttpConfigurer::disable)
+            .cors((cors) -> cors
+                .configurationSource(corsConfigurationSource())
+            )
             .oauth2Login(oauth2 -> oauth2
                 .loginPage("/login")
                 .defaultSuccessUrl("/home", true)
@@ -45,6 +53,21 @@ public class SecurityConfig {
             new AntPathRequestMatcher("/webjars/**"),
             new AntPathRequestMatcher("/**")
         );
+    }
+
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration corsConfiguration = new CorsConfiguration();
+        corsConfiguration.setAllowedOriginPatterns(List.of("*"));
+        corsConfiguration.setAllowedHeaders(List.of("*"));
+        corsConfiguration.setAllowCredentials(true);
+        corsConfiguration.setAllowedMethods(
+            Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS")
+        );
+        corsConfiguration.setExposedHeaders(List.of("Authorization"));
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", corsConfiguration);
+        return source;
     }
 
     @Bean
