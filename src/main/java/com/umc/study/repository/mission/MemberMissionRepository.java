@@ -19,7 +19,7 @@ public interface MemberMissionRepository extends JpaRepository<MemberMission, Lo
         + "FROM MemberMission m "
         + "WHERE m.member = :member AND m.mission = :mission "
         + "ORDER BY m.updatedAt DESC")
-    Optional<MemberMission> findTop1ByMemberAndMission(
+    List<MemberMission> findTop1ByMemberAndMission(
         @Param("member") Member member,
         @Param("mission") Mission mission
     );

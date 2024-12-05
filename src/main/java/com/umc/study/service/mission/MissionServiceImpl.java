@@ -24,9 +24,11 @@ import java.util.List;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class MissionServiceImpl implements MissionService {
 
     private final MemberRepository memberRepository;
@@ -35,6 +37,7 @@ public class MissionServiceImpl implements MissionService {
     private final MemberMissionRepository memberMissionRepository;
 
     @Override
+    @Transactional(readOnly = true)
     public List<MissionReadByStatusServiceResponseDto> getMissionListByStatus(
         final Long memberId,
         final String status
@@ -101,12 +104,13 @@ public class MissionServiceImpl implements MissionService {
 
     // 가장 최근의 member mission 1개만 가지고 와서 도전 중인지 확인(true: 이미 도전 중 / false: 새로 도전)
     @Override
+    @Transactional(readOnly = true)
     public boolean isChallengingMission(final Long memberId, final Long missionId) {
         Mission mission = findMissionById(missionId);
         Member member = findMemberById(memberId);
 
         return memberMissionRepository.findTop1ByMemberAndMission(member, mission)
-            .map(memberMission -> memberMission.getStatus() != MissionStatus.CHALLENGING)
-            .orElse(true);
+            .stream()
+            .noneMatch(memberMission -> memberMission.getStatus() == MissionStatus.CHALLENGING);
     }
 }
