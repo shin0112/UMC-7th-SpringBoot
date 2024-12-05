@@ -12,6 +12,7 @@ import com.umc.study.repository.food.FoodRepository;
 import com.umc.study.repository.member.MemberFoodRepository;
 import com.umc.study.repository.member.MemberRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,10 +24,13 @@ public class MemberServiceImpl implements MemberService {
     private final MemberFoodRepository memberFoodRepository;
     private final FoodRepository foodRepository;
 
+    private final PasswordEncoder passwordEncoder;
+
     @Override
     @Transactional
     public JoinResultDto join(final JoinDto request) {
         Member member = memberRepository.save(MemberConverter.toMember(request));
+        member.encodePassword(passwordEncoder.encode(request.password()));
 
         request.preferCategory().forEach(category -> {
             Food food = foodRepository.findById(category)
