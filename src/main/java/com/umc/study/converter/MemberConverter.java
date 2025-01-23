@@ -33,6 +33,7 @@ public class MemberConverter {
 
     public static Member toMember(final MemberServiceRequest.JoinDto joinDto) {
         return Member.builder()
+            .password(joinDto.password())
             .email(joinDto.email())
             .gender(Gender.valueOf(joinDto.gender()))
             .inactiveDate(joinDto.inactiveDate())
