@@ -53,7 +53,7 @@ jobs:
           username: ${{ env.EC2_SSH_USER }}
           key: ${{ env.EC2_SSH_KEY }}
           script: |
-            docker pull ${{ env.DOCKER_IMAGE_NAME }}:latest
-            docker stop spring
-            docker rm spring
-            docker run -d -p 8080:8080 --name spring ${{ env.DOCKER_IMAGE_NAME }}:latest
+            sudo docker pull ${{ env.DOCKER_IMAGE_NAME }}:latest
+            sudo docker stop spring
+            sudo docker rm spring
+            sudo docker run -d -p 8080:8080 --name spring ${{ env.DOCKER_IMAGE_NAME }}:latest
